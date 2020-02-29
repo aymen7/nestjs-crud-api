@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+  api:
+    image: registry.gitlab.com/hd-consulting/ib3at-api:latest
+    environment:
+      - PORT=3000
+    ports:
+      - "8080:3000"
+    volumes:
+      - "apiData:/usr/app/upload/"
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 256M
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+      #placement:
+        #constraints: [node.role == manager]
+volumes:
+  apiData:
