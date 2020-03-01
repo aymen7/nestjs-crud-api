@@ -27,6 +27,22 @@ test:
     - master
   coverage: '/^All files\s+\|\s+\d+\.*\d*\s+\|\s*(\d+\.*\d*)/'
 
+build:
+  stage: build
+  environment:
+    name: build
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - ./dist/
+      - ./package.json
+  only:
+    - tags
+    - dev
+    - master
+
+
 package:
   image: docker:latest
   services:
