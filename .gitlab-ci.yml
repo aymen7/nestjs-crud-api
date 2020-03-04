@@ -2,7 +2,7 @@ stages:
   - test
   - build 
   - package
-  #- deploy
+  - deploy
 
 default:
   image: node:latest
