@@ -71,10 +71,8 @@ deploy:
     - eval $(ssh-agent -s)
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - ssh-add <(echo "$SSH_PRIVATE_KEY")
     - ssh-keyscan $DOMAINE >> ~/.ssh/known_hosts
-    - ssh-add
-    - echo "ls -a ~/.ssh/"
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
 
   script:
     - scp ./docker-compose.yml $USERNAME@$DOMAINE:docker-compose.yml
