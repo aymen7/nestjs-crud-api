@@ -75,8 +75,8 @@ deploy:
     - ssh-add <(echo "$SSH_PRIVATE_KEY")
 
   script:
-    - scp ./docker-compose.yml $USERNAME@$DOMAINE:docker-compose.yml
-    - ssh $USERNAME@$DOMAINE "sudo docker stack deploy -c docker-compose.yml --with-registry-auth ib3at"
+    - scp -i $SSH_PRIVATE_KEY ./docker-compose.yml $USERNAME@$DOMAINE:docker-compose.yml
+    - ssh -i $SSH_PRIVATE_KEY $USERNAME@$DOMAINE "sudo docker stack deploy -c docker-compose.yml --with-registry-auth ib3at"
   only:
     - tags
     - dev
