@@ -71,7 +71,7 @@ deploy:
     - eval $(ssh-agent -s)
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - ls
+    - ls ~/.ssh
     - cp $SSH_PRIVATE_KEY ~/.ssh/hdc_ed25519
     - chmod 600 ~/.ssh/hdc_ed25519
     - ssh-keyscan -t ed25519 $DOMAINE >> ~/.ssh/known_hosts
