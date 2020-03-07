@@ -65,22 +65,24 @@ deploy:
   stage: deploy
   environment:
     name: production
-    #url: http://www.transfonum.cf:8080
+    url: https://www.transfonum.cf:8080
   before_script:
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - ssh-keyscan $DOMAINE >> ~/.ssh/known_hosts
-    - ssh-add <(echo "$SSH_PRIVATE_KEY")
-
+    - cp $SSH_PRIVATE_KEY ~/.ssh/hdc_ed25519
+    - chmod 600 ~/.ssh/hdc_ed25519
+    - ssh-keyscan -t ed25519 $DOMAINE >> ~/.ssh/known_hosts
+    - ssh-add
   script:
-    - scp -i $SSH_PRIVATE_KEY ./docker-compose.yml $USERNAME@$DOMAINE:docker-compose.yml
-    - ssh -i $SSH_PRIVATE_KEY $USERNAME@$DOMAINE "sudo docker stack deploy -c docker-compose.yml --with-registry-auth ib3at"
+    - scp ./docker-compose.yml $USERNAME@$DOMAINE:docker-compose.yml
+    - ssh $USERNAME@$DOMAINE "sudo docker stack deploy -c docker-compose.yml --with-registry-auth ib3at"
   only:
     - tags
     - dev
     - master
+
 
 
     
