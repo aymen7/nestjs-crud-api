@@ -50,7 +50,7 @@ package:
   stage: package
   environment:
     name: package
-    url: https://139.59.154.151:8080
+    #url: http://139.59.154.151:8080
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN registry.gitlab.com
   script:
@@ -65,13 +65,14 @@ deploy:
   stage: deploy
   environment:
     name: production
-    url: https://www.transfonum.cf:8080
+    #url: http://139.59.154.151:8080
   before_script:
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - ls ~/.ssh
+    #- ssh -i $SSH_PRIVATE_KEY root@$DOMAINE
+    - ls
     - cp $SSH_PRIVATE_KEY ~/.ssh/hdc_ed25519
     - chmod 600 ~/.ssh/hdc_ed25519
     - ssh-keyscan -t ed25519 $DOMAINE >> ~/.ssh/known_hosts
