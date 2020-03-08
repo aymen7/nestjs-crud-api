@@ -50,7 +50,7 @@ package:
   stage: package
   environment:
     name: package
-    #url: http://139.59.154.151:8080
+    url: http://139.59.154.151:3000
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN registry.gitlab.com
   script:
@@ -65,7 +65,7 @@ deploy:
   stage: deploy
   environment:
     name: production
-    #url: http://139.59.154.151:8080
+    url: http://139.59.154.151:3000
   before_script:
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
